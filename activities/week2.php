@@ -15,7 +15,7 @@
     <nav>
       <div class="nav-inne">
         <div class="nav navbar navbar-expand-lg navbar-dark bg-dark p-2">
-          <a class="navbar-brand" href="./">James Johnston</a>
+          <a class="navbar-brand" href="../">James Johnston</a>
           <button type="button" class=navbar-toggler data-toggle="collapse" data-target="#navbar">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -50,11 +50,6 @@
             </div>
             <div class="card-body">
               <?php
-                /******************************
-                / Author: James Johnston
-                / Date: 1/29/2021
-                / CS382
-                ******************************/
                 $var1 = 10;
                 $var2 = 20;
                 echo '$var1 = ' . $var1;
