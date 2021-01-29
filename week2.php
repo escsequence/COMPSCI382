@@ -1,9 +1,14 @@
 <?php
+  /******************************
+  / Author: James Johnston
+  / Date: 1/29/2021
+  / CS382
+  ******************************/
   $var1 = 10;
   $var2 = 20;
   echo '<html>';
-  echo '<a href=\'./assignments.html\'>Go back to assignment page</a>';
-  echo '<h1>Assignment 2</h1>';
+  echo '<a href=\'./activities.html\'>Go back to assignment page</a>';
+  echo '<h1>Week 2 Activity</h1>';
   echo '<hr />';
   echo '<h2>Part 1</h2>';
   echo '$var1 = ' . $var1;
