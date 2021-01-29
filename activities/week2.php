@@ -7,7 +7,7 @@
   $var1 = 10;
   $var2 = 20;
   echo '<html>';
-  echo '<a href=\'./activities.html\'>Go back to assignment page</a>';
+  echo '<a href=\'../activities.html\'>Go back to assignment page</a>';
   echo '<h1>Week 2 Activity</h1>';
   echo '<hr />';
   echo '<h2>Part 1</h2>';
