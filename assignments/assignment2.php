@@ -153,7 +153,7 @@
             <?php
               tStart();
               tHeader(["Name", "Type", "Price"]);
-              // Generate part 1 content
+              // Generate part 2 content
               $p2content = Array();
               foreach($products as $item) {
                 $new_item = Array();
@@ -180,7 +180,7 @@
             <?php
               tStart();
               tHeader(["Name", "Type", "Price"]);
-              // Generate part 1 content
+              // Generate part 3 content
               $p3content = Array();
               foreach($products as $item) {
                 $new_item = Array();
@@ -208,7 +208,7 @@
               $total_revenue = 0;
               tStart();
               tHeader(["Name", "Price", "Quantity", "Revenue"]);
-              // Generate part 1 content
+              // Generate part 4 content
               $p4content = Array();
               foreach($products as $item) {
                 $new_item = Array();
@@ -239,7 +239,7 @@
               $total_revenue = 0;
               tStart();
               tHeader(["Name", "Type", "Price", "Quantity", "Revenue"]);
-              // Generate part 1 content
+              // Generate part 5 content
               $p5content = Array();
               foreach($products as $item) {
                 if ($item["type"] == 'electronics') {
