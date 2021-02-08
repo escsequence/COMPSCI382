@@ -1,4 +1,11 @@
 <?php
+  /******************************
+  / Assignment 3
+  / Author: James Johnston
+  / Date: 2/7/2021
+  / CS382
+  ******************************/
+
   // Constants
   define("TAX_RATE", 0.05);
   define("MILK_CHOCOLATE_COST", 2.50);
