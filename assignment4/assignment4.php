@@ -216,6 +216,7 @@
                     echo "<li>An unknown error occured. Please return to the page and re-submit correct values.</li>";
                   }
                   echo "</ul>";
+                  echo "<a href='../assignments/assignment4.html'>Back</a>";
                 } else {
                   echo "Name: " .  $_POST['fullName'] . "<br /><br />";
                   echo "Email: " .  $_POST['email'] . "<br />";
