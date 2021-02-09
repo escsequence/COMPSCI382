@@ -9,9 +9,6 @@
   // Constants
   define("TAX_RATE", 0.05);
   define("BASE_SYSTEM_COST", 800);
-  //define("ASSORTED_FINE_COST", 4.99);
-  //define("ASSORTED_MILK_DARK_COST", 5.75);
-
 
   // Validate input variables here
   function post_valid($arg) {
@@ -25,6 +22,7 @@
     return array_search($value, $array);
   }
 
+  // We can validate the components we are building. The value cannot be an empty string and it also needs to exist in our array
   function validate_component($component, $array) {
     if (isset($_POST[$component])) {
       $component_cost = intval($_POST[$component]);
@@ -46,6 +44,7 @@
   $memory_selections = Array("8 GB" => 0, "16 GB" => 200, "32 GB" => 400, "64 GB" => 1000, "128 GB" => 1200);
   $hd_selections = Array("500 GB" => 0, "1 TB" => 100, "2 TB" => 200, "4 TB" => 300, "240 GB SSD" => 150);
 
+  // Start the cost at the base system cost level
   $sub_total = BASE_SYSTEM_COST;
 
   // Validation
@@ -58,18 +57,21 @@
   }
 
   if (post_valid("fullName")) {
-
+    $name = $_POST["fullName"];
   } else {
     $invalid_name = true;
     $input_error = true;
   }
 
   if (post_valid("email")) {
-
+    $email = $_POST["email"];
   } else {
     $invalid_email = true;
     $input_error = true;
   }
+
+  // No validation done on comments per the assignment
+  $comments = $_POST["comments"];
 
   if (validate_component("processor", $processor_selections)) {
     $processor_selection_cost = intval($_POST["processor"]);
@@ -98,38 +100,9 @@
 
   // Calculate the taxes
   if (!$input_error) {
-    $tax_total = $sub_total * TAX_RATE;
-    $total_cost = $tax_total + $sub_total;
+    $tax_total = round($sub_total * TAX_RATE, 2);
+    $total_cost = round($tax_total + $sub_total, 2);
   }
-
-
-  // if (post_valid_numeric('milkchocolate', 0, 20)) {
-  //   if (post_valid_numeric('assortedfine', 0, 20)) {
-  //     if (post_valid_numeric('assortedmilk', 0, 20)) {
-  //       $valid_input = true;
-  //       $milk_chocolate_quantity = $_POST['milkchocolate'];
-  //       $assored_fine_quantity = $_POST['assortedfine'];
-  //       $assorted_milk_quantity = $_POST['assortedmilk'];
-  //
-  //       // Generate the totals for each type of chocolate
-  //       $milk_chocolate_total = round($milk_chocolate_quantity * MILK_CHOCOLATE_COST, 2);
-  //       $assored_fine_total = round($assored_fine_quantity * ASSORTED_FINE_COST, 2);
-  //       $assorted_milk_total = round($assorted_milk_quantity * ASSORTED_MILK_DARK_COST, 2);
-  //
-  //       // Calculate the sub total
-  //       $sub_total_cost = round($milk_chocolate_total + $assored_fine_total + $assorted_milk_total, 2);
-  //
-  //       // Now calculate the taxes
-  //       $taxes = round($sub_total_cost * TAX_RATE, 2);
-  //
-  //       // Calculate the subtotal + taxes
-  //       $total_cost = round($sub_total_cost + $taxes, 2);
-  //
-  //     }
-  //   }
-  // }
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -180,28 +153,13 @@
             </div>
             <div class="card-body">
               <?php
-                // if ($valid_input) {
-                //   echo "<p>Number of milk chocolates: $milk_chocolate_quantity</p>";
-                //   echo "<p>Number of assorted fine chocolates: $assored_fine_quantity</p>";
-                //   echo "<p>Number of assorted milk and dark chocolates: $assorted_milk_quantity</p>";
-                //   echo "<hr />";
-                //   // Make sure we display in a clean format with 2 numbers
-                //   $format_sub_total = number_format($sub_total_cost, 2, '.', '');
-                //   echo "<p><strong>Total cost:</strong> $$format_sub_total</p>";
-                //
-                //   $format_taxes = number_format($taxes, 2, '.', '');
-                //   echo "<p><strong>5% Taxes:</strong> $$format_taxes</p>";
-                //
-                //   $format_total_cost = number_format($total_cost, 2, '.', '');
-                //   echo "<p><strong>Total amount:</strong> $$format_total_cost</p>";
-                //
-                // } else {
-                //   echo 'Invalid input, please go back and enter in valid values. Please make sure that the quantities are within 0-20.';
-                // }
+                // Determine if we display an error message or the details
                 if ($input_error) {
-                  echo "Please go back and correct the following errors: ";
-                  echo "<ul>";
 
+                  // Generic error message
+                  echo "Please go back and correct the following errors: ";
+                  // Contain a list of the errors
+                  echo "<ul>";
                   if ($invalid_os) {
                     echo "<li class='text-danger'>No operating system selected.</li>";
                   }
@@ -212,22 +170,25 @@
                     echo "<li class='text-danger'>No email entered.</li>";
                   }
 
+                  // If we are here and none of these errors are true then it must be an issue with the values
                   if (!$invalid_os && !$invalid_name && !$invalid_email) {
                     echo "<li>An unknown error occured. Please return to the page and re-submit correct values.</li>";
                   }
                   echo "</ul>";
+
+                  // Show a back link
                   echo "<a href='../assignments/assignment4.html'>Back</a>";
                 } else {
-                  echo "Name: " .  $_POST['fullName'] . "<br /><br />";
-                  echo "Email: " .  $_POST['email'] . "<br />";
+
+                  // Display the contents of the purchase
+                  echo "<strong>Name:</strong> $name<br /><br />";
+                  echo "<strong>Email:</strong> $email<br />";
                   echo "<hr />";
                   echo "<span class='h4'>System Configuration:</span><br/ ><br />";
+
                   // List of OS, processor, memory, and HDD
                   echo "<ul>";
                   echo "<li><strong>Operating system:</strong> $os_selection</li>";
-                  //echo "Processor = " .  $_POST['processor'] . "<br />";
-                  //echo "Memory = " .  $_POST['memory'] . "<br />";
-                  //echo "HDD = " .  $_POST['hd'] . "<br />";
                   echo "<li><strong>Processor:</strong> $processor_selection</li>";
                   echo "<li><strong>Memory:</strong> $memory_selection</li>";
                   echo "<li><strong>Hard Disk:</strong> $hd_selection</li>";
@@ -235,16 +196,19 @@
 
                   echo "<hr />";
                   // Sub total cost
-                  echo "<strong>Sub total:</strong> $$sub_total<br /><br />";
+                  $format_sub_total = number_format($sub_total, 2, '.', '');
+                  echo "<strong>Sub total:</strong> $$format_sub_total<br /><br />";
 
                   // 5% Taxes
-                  echo "<strong>5% Taxes:</strong> $$tax_total<br /><br />";
+                  $format_tax_total = number_format($tax_total, 2, '.', '');
+                  echo "<strong>5% Taxes:</strong> $$format_tax_total<br /><br />";
 
                   // Total cost
-                  echo "<strong>Total Amount:</strong> $$total_cost<br />";
+                  $format_total_cost = number_format($total_cost, 2, '.', '');
+                  echo "<strong>Total Amount:</strong> $$format_total_cost<br />";
                   echo "<hr />";
 
-                  echo "<strong>Comments:</strong> " .  $_POST['comments'];
+                  echo "<strong>Comments:</strong> $comments";
                 }
               ?>
             </div>
