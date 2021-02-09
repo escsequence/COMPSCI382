@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Page title -->
+    <title>COMPSCI382 | Assignment 3</title>
+  </head>
+  <body>
+    <!-- General navigation for the HTML page. -->
+    <nav>
+      <div class="nav-inne">
+        <div class="nav navbar navbar-expand-lg navbar-dark bg-dark p-2">
+          <a class="navbar-brand" href="../">James Johnston</a>
+          <button type="button" class=navbar-toggler data-toggle="collapse" data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id="navbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="../">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../about.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="../assignments.html">Assignments</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../activities.html">Activites</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Main body of the HTML page. -->
+    <div class="content container-fluid mt-2">
+      <div class="assignment" id="assignment3-part-1">
+          <div class="card">
+            <div class="card-header bg-secondary text-white">
+              Assignment4 - Online Order Form
+            </div>
+            <div class="card-body">
+              <form name="OrderForm">
+                  <div class='col'>
+                      <div class="card">
+                          <div class="card-header bg-secondary text-white">Configure your system</div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label for="operatingSystem">Operating System</label>
+                                  <select name="os" class="form-control" id="operatingSystem">
+                                      <option value="0">--select operating system--</option>
+                                      <option value="w10">Windows 10</option>
+                                      <option value="u18">Ubuntu 18.04</option>
+                                  </select>
+                              </div>
+
+                              <div class="form-group">
+                                  <label for="processor">Processor</label>
+                                  <select name="processor" class="form-control" id="processor">
+                                      <option selected="selected" value="0">Intel Core i5</option>
+                                      <option value="400">Intel Core i7</option>
+                                      <option value="300">AMD Ryzen 7</option>
+                                  </select>
+                              </div>
+                              <p>Memory</p>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="memory" id="memory1" value="1200" class="form-check-input">
+                                  <label class="form-check-label" for="memory1">
+                                      128 GB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="memory" id="memory2" value="1000" class="form-check-input">
+                                  <label class="form-check-label" for="memory2">
+                                      64 GB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="memory" id="memory3" value="400" class="form-check-input">
+                                  <label class="form-check-label" for="memory3">
+                                      32 GB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="memory" id="memory4" value="200" class="form-check-input">
+                                  <label class="form-check-label" for="memory1">
+                                      16 GB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="memory" id="memory5" value="0" class="form-check-input active"
+                                      checked>
+                                  <label class="form-check-label" for="memory5">
+                                      8 GB
+                                  </label>
+                              </div>
+
+                              <p style="margin-top: 20px">Hard Drive</p>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="hd" id="hd1" value="0" class="form-check-input active" checked>
+                                  <label class="form-check-label" for="hd1">
+                                      500 GB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="hd" id="hd2" value="100" class="form-check-input">
+                                  <label class="form-check-label" for="hd2">
+                                      1 TB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="hd" id="hd3" value="200" class="form-check-input">
+                                  <label class="form-check-label" for="hd3">
+                                      2 TB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="hd" id="hd4" value="300" class="form-check-input">
+                                  <label class="form-check-label" for="hd4">
+                                      4 TB
+                                  </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input type="radio" name="hd" id="hd5" value="150" class="form-check-input">
+                                  <label class="form-check-label" for="hd5">
+                                      240 GB SSD
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="card mt-2">
+                          <div class="card-header bg-secondary text-white">Contact Information</div>
+                          <div class="card-body">
+                              <div class="form-group">
+                                  <label for="inputName">Name</label>
+                                  <input type="text" class="form-control" id="inputName" placeholder="Enter Name"
+                                      name="fullName">
+                              </div>
+                              <div class="form-group">
+                                  <label for="inputEmail">Email address</label>
+                                  <input type="email" class="form-control" id="inputEmail" placeholder="Enter Email"
+                                      name="email">
+                              </div>
+
+                          </div>
+                      </div>
+                      <div class="card mt-2">
+                          <div class="card-header bg-secondary text-white">Special instructions/Comments</div>
+                          <div class="card-body">
+
+                              <textarea name='comments'
+                                  placeholder="If you have any comments or special instructions, please enter them here"
+                                  class='form-control' rows='3'>
+                              </textarea>
+                          </div>
+                      </div>
+                      <p class="mt-2">
+                          <button type="submit" class='btn btn-primary'> Finalize sale</button>
+                          <button type="reset" class='btn btn-default'>Cancel</button>
+                      </p>
+                  </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script includes after the content -->
+    <!-- Jquery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CDN -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+
+  <!-- Footer W.I.P -->
+  <footer>
+    <div class="footer">
+
+    </div>
+  </footer>
+</html>
