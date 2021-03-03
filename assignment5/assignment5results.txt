@@ -1,0 +1,222 @@
+--------------
+SELECT firstName, lastName, phone FROM members
+--------------
+
++------------+--------------+----------------+
+| firstName  | lastName     | phone          |
++------------+--------------+----------------+
+| Christian  | Schmidt      | (262) 555-8353 |
+| Jill       | Finelli      | (262) 555-1122 |
+| Jackie     | Hollander    | (262) 555-7352 |
+| Jean       | Montgolfier  | (262) 555-9264 |
+| Juan       | Santiago     | (262) 555-9865 |
+| Julie      | Smith        | (262) 555-9785 |
+| Louis      | Pascal       | (262) 555-6439 |
+| Nadia      | Likorsky     | (262) 555-8352 |
+| Rudolph    | Geiger       | (262) 555-6286 |
+| Ryan       | Greene       | (262) 555-8370 |
+| Sony       | Nathan       | (262) 555-1234 |
+|  Christian |  Schmidt     |  262 555-8353  |
+|  Jill      |  Finelli     |  262 555-1122  |
+|  Jackie    |  Hollander   |  262 555-7352  |
+|  Jean      |  Montgolfier |  262 555-9264  |
+|  Juan      |  Santiago    |  262 555-9865  |
+|  Julie     |  Smith       |  262 555-9785  |
+|  Louis     |  Pascal      |  262 555-6439  |
+|  Nadia     |  Likorsky    |  262 555-8352  |
+|  Rudolph   |  Geiger      |  262 555-6286  |
+|  Ryan      |  Greene      |  262 555-8370  |
+|  Sony      |  Nathan      |  262 555-1234  |
+| Sobitha    | Samaranayake |                |
+| Sobitha    | Samaranayake | 19207231862    |
+| Sobitha    | Samaranayake | 19207231862    |
+| sam        | samarans     | 123456789      |
++------------+--------------+----------------+
+26 rows in set (0.000 sec)
+
+--------------
+SELECT title, year, movieID FROM movies WHERE type = 'Animation'
+--------------
+
++-------------------------+------+---------+
+| title                   | year | movieID |
++-------------------------+------+---------+
+| Who Framed Roger Rabbit | 1998 |      45 |
+| Rescuers Down Under     | 1990 |      48 |
+| Beauty and the Beast    | 1991 |      49 |
+| The Lion King           | 1994 |      56 |
+| Tarzan                  | 1999 |      64 |
+| Finding Nemo            | 2003 |      68 |
+| Ratatouille             | 2008 |      78 |
+| Inside Out              | 2015 |      95 |
++-------------------------+------+---------+
+8 rows in set (0.000 sec)
+
+--------------
+SELECT title, year, movieID FROM movies WHERE type = 'Sci-Fi'
+--------------
+
++------------------------------+------+---------+
+| title                        | year | movieID |
++------------------------------+------+---------+
+| Star Wars                    | 1977 |      26 |
+| ET                           | 1982 |      32 |
+| Star Wars: Episode I         | 1999 |      65 |
+| Gladiator                    | 2000 |      88 |
+| Gravity                      | 2013 |      97 |
+| Interstellar                 | 2014 |      98 |
+| Avatar                       | 2009 |      99 |
+| Star Wars: The Force Awakens | 2015 |     100 |
+| Star Wars: The Last Jedi     | 2017 |     101 |
++------------------------------+------+---------+
+9 rows in set (0.000 sec)
+
+--------------
+SELECT m.title, m.type, r.dateOut FROM rentals r INNER JOIN movies m ON m.movieID = r.movieID WHERE r.dateOut < '2017-12-31'
+--------------
+
++-----------------------------------------------+-----------+------------+
+| title                                         | type      | dateOut    |
++-----------------------------------------------+-----------+------------+
+| The Lord of the Rings: The Return of the King | Action    | 2015-02-15 |
+| The Dark Knight                               | Action    | 2015-02-10 |
+| Braveheart                                    | Drama     | 2015-02-12 |
+| Chicago                                       | Musical   | 2015-10-25 |
+| Casablanca                                    | Romance   | 2015-10-22 |
+| Star Wars: Episode I                          | Sci-Fi    | 2015-02-14 |
+| Raiders of the Lost Ark                       | Adventure | 2015-02-27 |
+| Oliver!                                       | Musical   | 2015-12-01 |
+| Matrix                                        | Adventure | 2015-04-12 |
+| Star Wars: Episode I                          | Sci-Fi    | 2015-12-13 |
+| ET                                            | Sci-Fi    | 2015-12-15 |
+| Star Wars                                     | Sci-Fi    | 2016-02-10 |
+| Braveheart                                    | Drama     | 2016-12-12 |
+| Rescuers Down Under                           | Animation | 2017-10-25 |
+| The English Patient                           | Drama     | 2017-10-22 |
+| Star Wars: Episode I                          | Sci-Fi    | 2017-12-14 |
+| No Country for Old Men                        | Mystery   | 2017-12-27 |
++-----------------------------------------------+-----------+------------+
+17 rows in set (0.000 sec)
+
+--------------
+SELECT m.title, m.type, r.dateOut FROM rentals r INNER JOIN movies m ON m.movieID = r.movieID WHERE r.dateOut > '2017-12-31' AND m.type = 'Sci-Fi'
+--------------
+
++------------------------------+--------+------------+
+| title                        | type   | dateOut    |
++------------------------------+--------+------------+
+| Star Wars: Episode I         | Sci-Fi | 2019-02-13 |
+| Star Wars                    | Sci-Fi | 2019-12-13 |
+| Star Wars: The Force Awakens | Sci-Fi | 2020-10-01 |
+| Avatar                       | Sci-Fi | 2020-12-02 |
+| Star Wars: The Last Jedi     | Sci-Fi | 2020-12-05 |
+| Star Wars: The Force Awakens | Sci-Fi | 2020-12-12 |
++------------------------------+--------+------------+
+6 rows in set (0.000 sec)
+
+--------------
+SELECT title, type, year FROM movies WHERE type = 'Drama' AND year BETWEEN '2010' AND '2019'
+--------------
+
++--------------------+-------+------+
+| title              | type  | year |
++--------------------+-------+------+
+| The Artist         | Drama | 2011 |
+| The King's Speech  | Drama | 2010 |
+| Bridge of Spies    | Drama | 2015 |
+| The Imitation Game | Drama | 2014 |
++--------------------+-------+------+
+4 rows in set (0.000 sec)
+
+--------------
+SELECT mb.firstName, mb.lastName, mv.title, mv.type, mv.year FROM members mb LEFT JOIN rentals r USING(memberID) INNER JOIN movies mv ON (r.movieID = mv.movieID) ORDER BY mb.memberID ASC
+--------------
+
++-----------+-------------+-----------------------------------------------+-----------+------+
+| firstName | lastName    | title                                         | type      | year |
++-----------+-------------+-----------------------------------------------+-----------+------+
+| Christian | Schmidt     | The Lord of the Rings: The Return of the King | Action    | 2003 |
+| Christian | Schmidt     | Inside Out                                    | Animation | 2015 |
+| Christian | Schmidt     | Star Wars: Episode I                          | Sci-Fi    | 1999 |
+| Christian | Schmidt     | Airport                                       | Drama     | 1970 |
+| Jill      | Finelli     | The Dark Knight                               | Action    | 2008 |
+| Jill      | Finelli     | Matrix                                        | Adventure | 1999 |
+| Jackie    | Hollander   | Chicago                                       | Musical   | 2002 |
+| Jackie    | Hollander   | Braveheart                                    | Drama     | 1995 |
+| Jackie    | Hollander   | Argo                                          | Action    | 2012 |
+| Jean      | Montgolfier | Casablanca                                    | Romance   | 1940 |
+| Jean      | Montgolfier | Matrix                                        | Adventure | 1999 |
+| Juan      | Santiago    | Tootsie                                       | Comedy    | 1982 |
+| Juan      | Santiago    | Star Wars: The Force Awakens                  | Sci-Fi    | 2015 |
+| Juan      | Santiago    | Avatar                                        | Sci-Fi    | 2009 |
+| Juan      | Santiago    | Star Wars: The Last Jedi                      | Sci-Fi    | 2017 |
+| Juan      | Santiago    | The Departed                                  | Mystery   | 2006 |
+| Juan      | Santiago    | Star Wars: Episode I                          | Sci-Fi    | 1999 |
+| Julie     | Smith       | Star Wars: The Force Awakens                  | Sci-Fi    | 2015 |
+| Julie     | Smith       | Raiders of the Lost Ark                       | Adventure | 1981 |
+| Louis     | Pascal      | Oliver!                                       | Musical   | 1968 |
+| Louis     | Pascal      | Matrix                                        | Adventure | 1999 |
+| Louis     | Pascal      | No Country for Old Men                        | Mystery   | 2007 |
+| Louis     | Pascal      | Seven                                         | Drama     | 1995 |
+| Nadia     | Likorsky    | Star Wars: Episode I                          | Sci-Fi    | 1999 |
+| Nadia     | Likorsky    | Who Framed Roger Rabbit                       | Animation | 1998 |
+| Rudolph   | Geiger      | The English Patient                           | Drama     | 1996 |
+| Rudolph   | Geiger      | Fargo                                         | Drama     | 1996 |
+| Rudolph   | Geiger      | ET                                            | Sci-Fi    | 1982 |
+| Rudolph   | Geiger      | Into the Wild                                 | Adventure | 2007 |
+| Ryan      | Greene      | Star Wars                                     | Sci-Fi    | 1977 |
+| Ryan      | Greene      | Rescuers Down Under                           | Animation | 1990 |
+| Ryan      | Greene      | Star Wars                                     | Sci-Fi    | 1977 |
+| Sony      | Nathan      | Braveheart                                    | Drama     | 1995 |
+| Sony      | Nathan      | Star Wars: Episode I                          | Sci-Fi    | 1999 |
++-----------+-------------+-----------------------------------------------+-----------+------+
+34 rows in set (0.000 sec)
+
+--------------
+SELECT mb.firstName, mb.lastName, mv.title, mv.type, mv.year FROM members mb LEFT JOIN rentals r USING(memberID) INNER JOIN movies mv ON (r.movieID = mv.movieID) WHERE mv.type = 'Drama' OR mv.type = 'Adventure' ORDER BY mb.memberID ASC
+--------------
+
++-----------+-------------+-------------------------+-----------+------+
+| firstName | lastName    | title                   | type      | year |
++-----------+-------------+-------------------------+-----------+------+
+| Christian | Schmidt     | Airport                 | Drama     | 1970 |
+| Jill      | Finelli     | Matrix                  | Adventure | 1999 |
+| Jackie    | Hollander   | Braveheart              | Drama     | 1995 |
+| Jean      | Montgolfier | Matrix                  | Adventure | 1999 |
+| Julie     | Smith       | Raiders of the Lost Ark | Adventure | 1981 |
+| Louis     | Pascal      | Matrix                  | Adventure | 1999 |
+| Louis     | Pascal      | Seven                   | Drama     | 1995 |
+| Rudolph   | Geiger      | The English Patient     | Drama     | 1996 |
+| Rudolph   | Geiger      | Fargo                   | Drama     | 1996 |
+| Rudolph   | Geiger      | Into the Wild           | Adventure | 2007 |
+| Sony      | Nathan      | Braveheart              | Drama     | 1995 |
++-----------+-------------+-------------------------+-----------+------+
+11 rows in set (0.000 sec)
+
+--------------
+SELECT mb.firstName, mb.lastName, mv.title, mv.type, mv.year FROM members mb LEFT JOIN rentals r USING(memberID) INNER JOIN movies mv ON (r.movieID = mv.movieID) WHERE mv.type = 'Sci-Fi' AND mb.memberID = 5
+--------------
+
++-----------+----------+------------------------------+--------+------+
+| firstName | lastName | title                        | type   | year |
++-----------+----------+------------------------------+--------+------+
+| Juan      | Santiago | Star Wars: Episode I         | Sci-Fi | 1999 |
+| Juan      | Santiago | Star Wars: The Force Awakens | Sci-Fi | 2015 |
+| Juan      | Santiago | Avatar                       | Sci-Fi | 2009 |
+| Juan      | Santiago | Star Wars: The Last Jedi     | Sci-Fi | 2017 |
++-----------+----------+------------------------------+--------+------+
+4 rows in set (0.000 sec)
+
+--------------
+SELECT mb.firstName, mb.lastName, mv.title, mv.type, mv.year, r.dateOut FROM members mb LEFT JOIN rentals r USING(memberID) INNER JOIN movies mv ON (r.movieID = mv.movieID) WHERE mv.type = 'Drama' AND r.dateOut > '2019-12-01'
+--------------
+
++-----------+----------+---------+-------+------+------------+
+| firstName | lastName | title   | type  | year | dateOut    |
++-----------+----------+---------+-------+------+------------+
+| Louis     | Pascal   | Seven   | Drama | 1995 | 2019-12-14 |
+| Christian | Schmidt  | Airport | Drama | 1970 | 2019-12-27 |
++-----------+----------+---------+-------+------+------------+
+2 rows in set (0.000 sec)
+
+Bye
