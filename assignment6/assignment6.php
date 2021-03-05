@@ -9,7 +9,7 @@
   // Connect to the db
   include('pdo_connect.php');
 
-  // Get the mode/genre
+  // Get the get values passed through
   $type = isset($_GET['type']) ? strip_tags($_GET['type']) : null;
   $genre = isset($_GET['genre']) ?  strip_tags($_GET['genre']) : null;
   $genre2 = isset($_GET['genre2']) ? strip_tags($_GET['genre2']) : null;
@@ -17,6 +17,7 @@
   $date = isset($_GET['date']) ? strip_tags($_GET['date']) : null;
   $date2 = isset($_GET['date2']) ? strip_tags($_GET['date2']) : null;
 
+  // Allows us to assemble a key, value array and get the key based on a value
   function get_key_from_value($value, $array) {
     return array_search($value, $array);
   }
@@ -87,6 +88,7 @@
     }
   }
 
+  // Important SQL function to call to the data
   function getAll($sql, $db, $parameterValues = null) {
 
     // Prepare the SQL with the statement provided
@@ -170,9 +172,13 @@
                 <div class="col-9">
                   <div class="tab-content">
                     <?php
+                      // If we should display the database portion or not.
                       $display_db = true;
 
+                      // Based on the type passed in we will decide what we are doing
                        switch ($type) {
+
+                         // First case is "members landing page"
                          case 'members':
                           $title = "Members";
                           $subtitle = "Showing all the members in the database.";
@@ -256,23 +262,30 @@
                           break;
 
                          default:
+                          // We tell the bottom portion we aren't able to display anything
                           $display_db = false;
                           break;
 
                        }
 
+                       // We determine if we are display data or not.
                       if ($display_db) {
+
+                        // Call our function and pass in our variables we assembled above.
                         displayArrayData($title, $subtitle, $content, $headers, $error);
+
                       } else {
 
+                        // This means we are showing the "landing page" or something else.
                         echo "<h3>Welcome to the Movie Store database!</h3>Please select an option to query our massive collection of movies, rentals, or members.";
+
                       }
                     ?>
                   </div>
                 </div>
               </div>
               <?php
-                //
+                $db = null; // clear connection
               ?>
             </div>
         </div>
