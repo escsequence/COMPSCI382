@@ -14,7 +14,11 @@
   $genre = isset($_GET['genre']) ?  $_GET['genre'] : "";
   $member_id = isset($_GET['memberId']) ? $_GET['memberId'] : "";
 
-  function displayMovieData($title, $list, $headers) {
+  function get_key_from_value($value, $array) {
+    return array_search($value, $array);
+  }
+
+  function displayArrayData($title, $list, $headers, $error = null) {
     // Title of the table being shown
   	echo "<h3>{$title}</h3>";
 
@@ -30,18 +34,15 @@
       // We loop through each of the headers and print them output
       foreach($headers as $header) {
 
-        // Increase the first letter
-        $upper_header = ucwords(strtolower($header));
-
         // Print the header
-        echo "<th>$upper_header</th>";
+        echo "<th>$header</th>";
       }
 
       // Close the header portion of the table
       echo "</tr></thead><tbody>";
 
       // Go through the list of movies
-      foreach ($list as $movie) {
+      foreach ($list as $tbl_itm) {
 
         // New row
         $trow = "<tr>";
@@ -49,13 +50,15 @@
         // We know that each of the header is a
         foreach($headers as $header) {
           // We lower it just incase since how it's stored in the db
-          $lower_header = strtolower($header);
 
-          // We get the content of the array based on the "lowered header"
-          $trow_content = $movie[$lower_header];
+          // Get the key from our headers
+          $header_key = get_key_from_value($header, $headers);
+
+          // Append the content from the array
+          $trow_content = $tbl_itm[$header_key];
 
           // We append the content to the row now.
-          $trow .= "<td>{$trow_content}</td>";
+          $trow .= "<td>$trow_content</td>";
         }
 
         // Last part of the table row
@@ -71,7 +74,11 @@
     } else {
 
         // There are no items in the list
-        echo "<p>There are no movies in the database";
+        if ($error == null) {
+          echo "<p>There are no items in the database</p>";
+        } else {
+          echo "<p>$error</p>";
+        }
 
     }
   }
@@ -138,7 +145,7 @@
             <div class="card-body">
               <?php
                 //echo getAll("SELECT * FROM users", $db);
-                //displayMovieData("Test", Array(Array("title"=>"Test", "year"=>1900, "type"=>"Test")), ["title", "year", "type"]);
+                displayArrayData("Members", getAll("SELECT firstName, lastName, phone FROM members", $db), ["firstName" => "First Name", "lastName" => "Last Name", "phone" => "Phone"]);
               ?>
             </div>
         </div>
