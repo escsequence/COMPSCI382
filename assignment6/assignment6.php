@@ -88,7 +88,7 @@
     }
   }
 
-  // Important SQL function to call to the data
+  // Important SQL function to call to the data\
   function getAll($sql, $db, $parameterValues = null) {
 
     // Prepare the SQL with the statement provided
