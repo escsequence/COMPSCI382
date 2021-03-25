@@ -1,6 +1,6 @@
 <?php
   /******************************
-  / Activity 10
+  / Assignment 8
   / Author: James Johnston
   / Date: 3/25/2021
   / CS382
