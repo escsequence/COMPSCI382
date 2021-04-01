@@ -106,7 +106,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <!-- Page title -->
-    <title>COMPSCI382 | Assignment 8</title>
+    <title>COMPSCI382 | Assignment 9</title>
   </head>
   <body>
     <!-- General navigation for the HTML page. -->
@@ -154,6 +154,7 @@
                       echo ($mode == "displaynewmemberform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmemberform'>Add New Member</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmemberform'>Add New Member</a>";
                       echo ($mode == "selectmember") ? "<a class='list-group-item list-group-item-action active' href='?mode=selectmember'>Update Member Information</a>" : "<a class='list-group-item list-group-item-action' href='?mode=selectmember'>Update Member Information</a>";
                       echo ($mode == "displaynewmovieform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmovieform'>Add New Movie</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmovieform'>Add New Movie</a>";
+                      echo ($mode == "selectmovie") ? "<a class='list-group-item list-group-item-action active' href='?mode=selectmovie'>Update Movie Information</a>" : "<a class='list-group-item list-group-item-action' href='?mode=selectmovie'>Update Movie Information</a>";
                     ?>
 
                   </div>
@@ -268,6 +269,20 @@
                           include('displayMemberList.php');
                           break;
 
+                        case 'selectmovie':
+                          // Need to display a list of members so that we can select a member to update data
+                          $sql = "select `movieID`, `title` from `movies` order by `title`";
+
+                          // This SQL statement does not use any parameters. Use the default $parameterValues array.
+                          $dataList = getAll($sql, $db, null);
+
+                          // Define page title
+                          $pageTitle = "Select a Movie form the List to Update Information";
+
+                          // Include a template to display a list of members
+                          include('displayMovieList.php');
+                          break;
+
                         case "displayMemberInfo":
                            /* The request (link) sends two key=value pairs using the GET method: type and memberId */
 
@@ -295,6 +310,31 @@
                           // Include a template to display a list of members
                           include('displayMemberInfo.php');
                           break;
+                        case 'displayMovieInfo':
+                          // By default, a link uses the GET method to send key/value pairs. Use the $_GET array to read the member id
+                          $movieID = (isset($_GET['movieID'])) ? $_GET['movieID'] : null;
+
+                          // If the $memberID is null then display an error message and exit.
+                          if (!isset($movieID)) {
+                            echo "You have not selected a movie!";
+                            exit();
+                          }
+
+                          // Select member's data
+                          $sql = "select `movieID`, `title`, `year`, `type` from `movies` where `movieID` = :movieID";
+
+                          // Define values for named parameters
+                          $parameterValues = array(":movieID" => $movieID);
+
+                         // Fetch data
+                         $dataList = getAll($sql, $db, $parameterValues);
+
+                         // Define page title
+                         $pageTitle = "Update Movie Information";
+
+                         // Include a template to display a list of members
+                         include('displayMovieInfo.php');
+                         break;
                         case 'updatememberinfo':
                         // Read input values
                     			$phone = "";
@@ -333,9 +373,52 @@
                     			// display an appropriate message
                     			echo "Successfully updated selected member's information.";
                           break;
-                          
+
+                          case 'updatemovieinfo':
+                          // Read input values
+                            $title = "";
+                            if (isset($_POST['title'])) {
+                                 $title = $_POST['title'];
+                            }
+                            $year = "";
+                            if (isset($_POST['year'])) {
+                                 $year = $_POST['year'];
+                            }
+                            $movieType = "";
+                            if (isset($_POST['movieType'])) {
+                                $movieType = $_POST['movieType'];
+                            }
+                            $movieID = "";
+                            if (isset($_POST['movieID'])) {
+                                $movieID = $_POST['movieID'];
+                            }
+
+                            /* if the memberId, phone,  or memberType is empty then display
+                            an error message.
+                            */
+                            if ($movieID === '' || $title === '' || $movieType === "" || $year === "") {
+                              echo "Invalid data";
+                              exit();
+                            }
+                            // Define the SQL statement
+                            $sql = "UPDATE  `movies` SET `title` = :title, `type` = :movieType, `year` = :year WHERE movieID = :movieID";
+
+                            // Define values for the named parameters
+                            $parameterValues = array(":title" => $title,
+                                ":movieType" => $movieType,
+                                ":year" => $year,
+                                 ":movieID" =>$movieID
+                              );
+
+                            // Prepare SQL statement
+                            $stm =$db->prepare($sql);
+                            // execute the statement object
+                            $stm->execute($parameterValues);
+                            // display an appropriate message
+                            echo "Successfully updated selected movie's information.";
+                            break;
                         default:
-                          echo "<p>Homepage for Assignment 8. Please select an action.</p>";
+                          echo "<p>Homepage for Assignment 9. Please select an action.</p>";
                           break;
                        }
 
