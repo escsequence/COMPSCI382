@@ -152,6 +152,7 @@
                       echo ($mode == null) ? "<a class='list-group-item list-group-item-action active' href='./index.php'>Home</a>" : "<a class='list-group-item list-group-item-action' href='./index.php'>Home</a>";
                       echo ($mode == "viewmembers") ? "<a class='list-group-item list-group-item-action active' href='?mode=viewmembers'>Members</a>" : "<a class='list-group-item list-group-item-action' href='?mode=viewmembers'>Members</a>";
                       echo ($mode == "displaynewmemberform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmemberform'>Add New Member</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmemberform'>Add New Member</a>";
+                      echo ($mode == "selectmember") ? "<a class='list-group-item list-group-item-action active' href='?mode=selectmember'>Update Member Information</a>" : "<a class='list-group-item list-group-item-action' href='?mode=selectmember'>Update Member Information</a>";
                       echo ($mode == "displaynewmovieform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmovieform'>Add New Movie</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmovieform'>Add New Movie</a>";
                     ?>
 
@@ -253,6 +254,86 @@
                           }
                           break;
 
+                        case 'selectmember':
+                          // Need to display a list of members so that we can select a member to update data
+                          $sql = "select `memberId`, `firstName`, `lastName` from `members` order by `lastName`";
+
+                          // This SQL statement does not use any parameters. Use the default $parameterValues array.
+                          $dataList = getAll($sql, $db, null);
+
+                          // Define page title
+                          $pageTitle = "Select a Member form the List to Update Information";
+
+                          // Include a template to display a list of members
+                          include('displayMemberList.php');
+                          break;
+
+                        case "displayMemberInfo":
+                           /* The request (link) sends two key=value pairs using the GET method: type and memberId */
+
+                           // By default, a link uses the GET method to send key/value pairs. Use the $_GET array to read the member id
+                           $memberId = (isset($_GET['memberId'])) ? $_GET['memberId'] : null;
+
+                           // If the $memberID is null then display an error message and exit.
+                           if (!isset($memberId)) {
+                             echo "You have not selected a member!";
+                             exit();
+                           }
+
+                           // Select member's data
+                           $sql = "select `memberId`, `firstName`, `lastName`, `phone`, `memberType` from `members` where `memberId` = :memberId";
+
+                           // Define values for named parameters
+                           $parameterValues = array(":memberId" => $memberId);
+
+                          // Fetch data
+                          $dataList = getAll($sql, $db, $parameterValues);
+
+                          // Define page title
+                          $pageTitle = "Update Member Information";
+
+                          // Include a template to display a list of members
+                          include('displayMemberInfo.php');
+                          break;
+                        case 'updatememberinfo':
+                        // Read input values
+                    			$phone = "";
+                    			if (isset($_POST['phone'])) {
+                    				   $phone = $_POST['phone'];
+                    			}
+                    			$memberType = "";
+                    			if (isset($_POST['memberType'])) {
+                    					$memberType = $_POST['memberType'];
+                    			}
+                    			$memberId = "";
+                    			if (isset($_POST['memberId'])) {
+                    				  $memberId = $_POST['memberId'];
+                    			}
+
+                    			/* if the memberId, phone,  or memberType is empty then display
+                    			an error message.
+                    			*/
+                    			if ($memberId === '' || $phone === '' || $memberType === "") {
+                    				echo "Invalid data";
+                    				exit();
+                    			}
+                    			// Define the SQL statement
+                    			$sql = "UPDATE  `members` SET `phone` = :phone, `memberType` = :memberType WHERE memberId = :memberId";
+
+                    			// Define values for the named parameters
+                    			$parameterValues = array(":phone" => $phone,
+                    					":memberType" => $memberType,
+                    					 ":memberId" =>$memberId
+                    				);
+
+                    			// Prepare SQL statement
+                    			$stm =$db->prepare($sql);
+                    			// execute the statement object
+                    			$stm->execute($parameterValues);
+                    			// display an appropriate message
+                    			echo "Successfully updated selected member's information.";
+                          break;
+                          
                         default:
                           echo "<p>Homepage for Assignment 8. Please select an action.</p>";
                           break;
