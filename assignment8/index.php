@@ -152,7 +152,7 @@
                       echo ($mode == null) ? "<a class='list-group-item list-group-item-action active' href='./index.php'>Home</a>" : "<a class='list-group-item list-group-item-action' href='./index.php'>Home</a>";
                       echo ($mode == "viewmembers") ? "<a class='list-group-item list-group-item-action active' href='?mode=viewmembers'>Members</a>" : "<a class='list-group-item list-group-item-action' href='?mode=viewmembers'>Members</a>";
                       echo ($mode == "displaynewmemberform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmemberform'>Add New Member</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmemberform'>Add New Member</a>";
-                      echo ($mode == "displaynewmovieform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmemberform'>Add New Movie</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmovieform'>Add New Movie</a>";
+                      echo ($mode == "displaynewmovieform") ? "<a class='list-group-item list-group-item-action active' href='?mode=displaynewmovieform'>Add New Movie</a>" : "<a class='list-group-item list-group-item-action' href='?mode=displaynewmovieform'>Add New Movie</a>";
                     ?>
 
                   </div>
