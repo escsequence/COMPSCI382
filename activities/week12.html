@@ -1,0 +1,272 @@
+<html lang="en">
+
+<head>
+	<!-- Include bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+		integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-8">
+				<h5>Product List</h5>
+
+				<table class='table table-bordered'>
+					<thead style="font-weight: bold">
+						<tr>
+							<td>Product</td>
+							<td>Category</td>
+							<td>Cost</td>
+							<td>Action </td>
+						</tr>
+					</thead>
+					<tbody id='product-list'></tbody>
+				</table>
+
+			</div>
+			<div class="col-4">
+				<h4>Shopping Cart </h4>
+				<h5>Total cost: $<span id='cost'>0.00</span></h5>
+				<table class='table' style="width: 50%">
+					<tbody id='cart'></tbody>
+				</table>
+			</div>
+		</div>
+
+
+	</div>
+
+	<script >
+
+const products = [{
+  id: 1,
+  type: 'electronics',
+  name: 'Audio Technica ATH-M50x',
+  price: 119.99,
+  quantity: 2
+},
+{
+  id: 2,
+  type: 'electronics',
+  name: 'Sennheiser HD 202 II',
+  price: 24.50,
+  quantity: 5
+},
+{
+  id: 3,
+  type: 'electronics',
+  name: 'GPX HM3817DTBK Micro System',
+  price: 135.99,
+  quantity: 1
+},
+{
+  id: 4,
+  type: 'electronics',
+  name: 'Samsung MX-J630 2.0 Channel 230 Watt System',
+  price: 117.99,
+  quantity: 4
+},
+{
+  id: 5,
+  type: 'electronics',
+  name: 'M-Audio Bass Traveler',
+  price: 29.00,
+  quantity: 9
+},
+{
+  id: 6,
+  type: 'electronics',
+  name: 'HLED Strip light kit',
+  price: 17.95,
+  quantity: 5
+},
+{ id: 7, type: 'movies', name: 'Spectre', price: 19.99, quantity: 0 },
+{
+  id: 8,
+  type: 'movies',
+  name: 'Finding Dory',
+  price: 19.99,
+  quantity: 4
+},
+
+{
+  id: 9,
+  type: 'movies',
+  name: 'Terminator: Genisys',
+  price: 14.95,
+  quantity: 3
+},
+{
+  id: 10,
+  type: 'movies',
+  name: 'Interstellar',
+  price: 12.00,
+  quantity: 4
+},
+{
+  id: 11,
+  type: 'movies',
+  name: 'Transformers: Age of Extinction',
+  price: 9.95,
+  quantity: 7
+},
+{
+  id: 12,
+  type: 'movies',
+  name: 'Eye in the Sky',
+  price: 14.95,
+  quantity: 6
+},
+{ id: 13, type: 'movies', name: 'Venom', price: 22.99, quantity: 0 },
+{
+  id: 14,
+  type: 'movies',
+  name: 'The spy who dumped me',
+  price: 29.00,
+  quantity: 8
+},
+{
+  id: 15,
+  type: 'movies',
+  name: 'Mamma Mia, Here We Go Again',
+  price: 22.99,
+  quantity: 4
+},
+{
+  id: 16,
+  type: 'electronics',
+  name: 'M-Audio Bass Traveler',
+  price: 29.00,
+  quantity: 5
+},
+{
+  id: 17,
+  type: 'video-games',
+  name: 'Battlefield 1',
+  price: 59.99,
+  quantity: 3
+},
+{
+  id: 18,
+  type: 'video-games',
+  name: 'Overwatch',
+  price: 40.00,
+  quantity: 1
+},
+{
+  id: 19,
+  type: 'video-games',
+  name: 'Gears of War 4',
+  price: 59.99,
+  quantity: 8
+},
+{
+  id: 20,
+  type: 'video-games',
+  name: 'Titanfall 2',
+  price: 59.99,
+  quantity: 7
+},
+{
+  id: 21,
+  type: 'video-games',
+  name: 'Sid Meier\'s Civilization VI ',
+  price: 59.99,
+  quantity: 4
+},
+{
+  id: 22,
+  type: 'video-games',
+  name: 'The Sims 4',
+  price: 39.99,
+  quantity: 2
+},
+{
+  id: 23,
+  type: 'video-games',
+  name: 'Grand Theft Auto V',
+  price: 59.99,
+  quantity: 7
+}];
+
+// display product list
+displayProducts();
+
+function displayProducts() {
+  let productInfo = '';
+
+  /* Display data:
+ Use a loop to go through each element in the products array.
+ Each element is an object. We are going to use a table to display products.
+ Use each product to create a table row.
+ Use the array-index to connect each product to a button
+ so that whenever a button is clicked, the corresponding 'index' can be used to
+ identify the selected product and then add to a cart.
+
+*/
+
+
+    products.forEach((p, index) => productInfo += createProductItemInfo(p, index));
+
+  // Display product Information
+  document.getElementById('product-list').innerHTML = productInfo;
+}
+
+
+
+
+
+
+
+function createProductItemInfo(item) {
+  let trow = "";
+  trow += `<tr><td>${item.name}</td><td>${item.type}</td><td>${item.price}</td>
+			<td><button type='button' class="btn btn-primary" onclick="addItemToCart(${item.id})" >Add</button></td></tr>`;
+  return trow;
+}
+
+/* Define an array to store the  selected product */
+let my_cart = [];
+
+
+function addItemToCart(id) {
+  // Identify the product using its id
+  const selection = products.find(item => item.id === id);
+  // Add the product to the 'my_cart' array
+  my_cart.push(selection);
+
+  // Display information about the courses selected by using indeces in the 'my_cart' array
+  displayCart();
+}
+
+function displayCart() {
+  /* Recreate the list of selected products using  elements in the 'my_cart' array every time
+    a course is added to or deleted from the list.
+  */
+  let total = 0; // store total cost
+  let tRow = '';
+
+  my_cart.forEach((item, index) => {
+    /* Each item is a product */
+
+    tRow += `<tr><td>${item.name}</td><td>${item.price}</td></tr>`;
+    total += item.price;
+  });
+
+  // Re-display cart
+  document.getElementById("cart").innerHTML = tRow;
+  document.getElementById("cost").innerHTML = total;
+}
+
+
+
+
+
+
+
+	</script>
+</body>
+
+</html>

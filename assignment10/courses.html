@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Set the viewport so this responsive site displays correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include bootstrap CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Include jQuery library -->
+
+<script src="https://code.jquery.com/jquery-1.11.0.js" integrity="sha256-zgND4db0iXaO7v4CLBIYHGoIIudWI5hRMQrPB20j0Qw=" crossorigin="anonymous"></script>
+
+<title>Schedule of Classes</title>
+<style>
+p, table {margin-left: 50px;}
+.datagrid { width: 400px;}
+.hrule { border-top: 1px solid #000}
+.listItem { padding: 6px;}
+</style>
+</head>
+<body>
+<div class='container-fluid'>
+
+
+
+
+<h3>Course Schedule </h3>
+<p><strong>Display subject, number, sectionId, instructor, and displayTime of all the courses taught in the selected
+classroom:</strong></p>
+
+
+<p>Location:
+    <select name="location" id="location" class="listItem" onchange="displaySchedule()">
+        <option value="-1" >--Select Location--</option>
+        <option value="MG0115" >MG115</option>
+        <option value="MG0125" >MG125</option>
+        <option value="HY0210" >HY210</option>
+        <option value="HE0101" >HE101</option>
+</select>
+</p>
+<table class='table table-bordered'>
+	<thead style="font-weight: bold">
+		<tr>
+			<td>Subject</td>
+			<td>Number</td>
+			<td>Section</td>
+			<td>Instructor</td>
+			<td>Time</td>
+		</tr>
+	</thead>
+	<tbody id='schedule'>
+		<tr><td colspan="5">--Select location --</td></tr>
+	</tbody>
+</table>
+<hr class="hrule"></hr>
+
+<h3>Course Information </h3>
+<p><strong>Display subject, number, title, description, and maxcredits of all the courses based on the  selected
+subject:</strong></p>
+
+<p>Subject:
+    <select name="subject" id="subject" class="listItem" onchange="displayCourseInfo()">
+        <option value="-1" >--Select Subject--</option>
+        <option value="COMPSCI" >COMPSCI: Computer Science</option>
+        <option value="MATH" >MATH: Mathematics</option>
+        <option value="MAGD" >MAGD: Media And Game Development</option>
+	</select>
+</p>
+<table class='table table-bordered'>
+	<thead style="font-weight: bold">
+		<tr>
+			<td>Subject</td>
+			<td>Number</td>
+			<td>Title</td>
+			<td>Description</td>
+			<td>Credits</td>
+		</tr>
+	</thead>
+	<tbody id='courseList'>
+		<tr><td colspan="5">--Select subject --</td></tr>
+	</tbody>
+</table>
+</div>
+</body>
+<script type="text/javascript">
+function displaySchedule() {
+  const location  = document.getElementById('location').value;
+
+  getData(`http://localhost/assignment10/courseApi.php?type=schedule&location=${location}`).then(response => {
+    const apiResponse = JSON.parse(response);
+
+    if (apiResponse.length > 0) {
+      const tRows = prepareHTMLContent(apiResponse, 'schedule');
+      document.getElementById('schedule').innerHTML = tRows;
+    }
+  })
+}
+
+function displayCourseInfo() {
+  const subject  = document.getElementById('subject').value;
+
+  getData(`http://localhost/assignment10/courseApi.php?type=courses&subject=${subject}`).then(response => {
+    const apiResponse = JSON.parse(response);
+
+    if (apiResponse.length > 0) {
+      const tRows = prepareHTMLContent(apiResponse, 'courses');
+      document.getElementById('courseList').innerHTML = tRows;
+    }
+  })
+}
+
+function getData(url) {
+	/* If the url is defined then this method returns an instance of the Promise object. */
+
+	if (url) {
+		const task = new Promise( function(resolve, reject) {
+  		const req = new XMLHttpRequest();
+  		req.open('GET', url);
+  		req.send();
+  		req.onload = function(){
+  			req.status === 200 ? resolve(req.response) : reject(Error(req.statusText));
+  		}
+		  req.onerror = function(e) {
+        reject(Error(`Network Error: ${e}`));
+      }
+		});
+		return task;
+	}
+	return false;
+}
+
+function prepareHTMLContent(list, type) {
+	let output = "";
+	for(let i in list ) {
+	const course = list[i];
+    switch(type) {
+      case 'schedule':
+  		  output += `<tr><td>${course.subject}</td><td>${course.number}</td><td>${course.sectionId}</td><td>${course.instructor}</td><td>${course.displayTime}</td></tr>`;
+        break;
+      case 'courses':
+        output += `<tr><td>${course.subject}</td><td>${course.number}</td><td>${course.title}</td><td>${course.description}</td><td>${course.maxcredits}</td></tr>`;
+        break;
+    }
+  }
+	return output;
+}
+</script>
+
+</html>
